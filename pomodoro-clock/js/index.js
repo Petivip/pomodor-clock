@@ -1,0 +1,91 @@
+
+$(document).ready(function () {
+  var ala = $("#alarm")[0];
+
+  var sesstime = parseInt($("#sessnum").html());
+  var breatime = parseInt($("#breanum").html());
+
+
+  $("#start").click(function () {
+    var sessCounter = setInterval(sessTimer, 1000);
+    sesstime *= 60;
+    breatime *= 60;
+
+    function sessTimer() {
+      sesstime -= 1;
+      if (sesstime === 0) {
+        ala.play();
+        clearInterval(sessCounter);
+        var breaCounter = setInterval(breaTimer, 1000);
+
+      }
+      if (sesstime % 60 >= 10) {$("#title").html("Session time");
+        $("#counter").html(Math.floor(sesstime / 60) + ":" + sesstime % 60);
+      } else {
+
+        $("#counter").html(Math.floor(sesstime / 60) + ":" + "0" + sesstime % 60);
+        $("#title").html("Session time");
+      }
+
+      function breaTimer() {
+        breatime -= 1;
+        if (breatime === 0) {
+          clearInterval(breaCounter);
+        }
+        if (breatime % 60 >= 10) {
+          $("#counter").html(Math.floor(breatime / 60) + ":" + breatime % 60);
+          $("#title").html("Break time");
+
+        } else
+        {$("#counter").html(Math.floor(breatime / 60) + ":" + "0" + breatime % 60);};
+        $("#title").html("Break time");
+      }
+    }
+    $("#stop").click(function () {
+      var stoptime = $("#counter").html();
+      clearInterval(sessCounter);
+      clearInterval(breaCounter);
+
+
+
+    });
+
+  });
+
+
+
+  $("#reset").click(function () {
+    sesstime = 25;
+    breatime = 5;
+    $("#sessnum").html(sesstime);
+    $("#breanum").html(breatime);
+
+  });
+
+
+
+
+  $("#add25").click(function () {
+    sesstime += 1;
+    $("#sessnum").html(sesstime);
+  });
+
+  $("#min25").click(function () {
+    if (sesstime >= 1) {
+      sesstime -= 1;
+      $("#sessnum").html(sesstime);}
+  });
+
+  $("#add5").click(function () {
+    breatime += 1;
+    $("#breanum").html(breatime);
+  });
+
+  $("#min5").click(function () {
+    if (breatime >= 1) {breatime -= 1;
+      $("#breanum").html(breatime);}
+  });
+
+
+
+});
